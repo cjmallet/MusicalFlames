@@ -14,7 +14,7 @@ public class SpawnMusic : MonoBehaviour
 
     public void SpawnMusicNote()
     {
-        spawnedMusicNote=GameObject.Instantiate(musicNote, spawnPosition,true);
+        spawnedMusicNote= Instantiate(musicNote, spawnPosition.position,spawnPosition.rotation,null);
     }
 
     public void DeleteMusicNote()
