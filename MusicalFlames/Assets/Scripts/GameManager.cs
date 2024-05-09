@@ -65,19 +65,13 @@ public class GameManager : MonoBehaviour
         failedScreen.gameObject.SetActive(true);
     }
 
-    private void Quit()
-    {
-        Application.Quit();
-    }
-
     private void Succes()
     {
         amountCompleted++;
 
         if (amountCompleted == 5)
         {
-            currentOrder.Clear();
-            correctOrder.Clear();
+            ClearOrder();
             amountCompleted = 0;
 
             if (currentPhase == Phases.Base)
@@ -91,6 +85,12 @@ public class GameManager : MonoBehaviour
         }
 
         CreateRandomOrder();
+    }
+
+    private void ClearOrder()
+    {
+        currentOrder.Clear();
+        correctOrder.Clear();
     }
 
     public void CheckInput(int input)
@@ -111,8 +111,15 @@ public class GameManager : MonoBehaviour
         InputManager.Instance.inputAllowed = true;
     }
 
+    public void Quit()
+    {
+        Application.Quit();
+    }
+
     public void Retry()
     {
+        ClearOrder();
+        currentPhase = Phases.Base;
         failedScreen.gameObject.SetActive(false);
         CreateRandomOrder();
     }
