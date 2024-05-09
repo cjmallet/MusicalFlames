@@ -1101,8 +1101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8518ecc6a9fe2fa4b9c2b726c23a4364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amountCompleted: 0
-  currentPhase: 0
+  failedScreen: {fileID: 1860598502}
 --- !u!4 &725910500
 Transform:
   m_ObjectHideFlags: 0
@@ -2306,8 +2305,8 @@ RectTransform:
   - {fileID: 394796420}
   - {fileID: 321906832}
   - {fileID: 874744261}
-  - {fileID: 1860598503}
   - {fileID: 606961940}
+  - {fileID: 1860598503}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

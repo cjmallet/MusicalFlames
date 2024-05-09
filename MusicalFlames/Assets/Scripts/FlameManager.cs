@@ -49,6 +49,7 @@ public class FlameManager : MonoBehaviour
                 flames[flame].GetComponent<Image>().enabled = true;
                 yield return new WaitForSeconds(waitTimeBetweenFlames);
                 flames[flame].GetComponent<Image>().enabled = false;
+                yield return new WaitForSeconds(0.1f);
             }
             else
             {
@@ -57,6 +58,7 @@ public class FlameManager : MonoBehaviour
                 yield return new WaitForSeconds(waitTimeBetweenFlames);
                 flames[flame - 5].GetComponent<Image>().enabled = false;
                 flames[flame - 4].GetComponent<Image>().enabled = false;
+                yield return new WaitForSeconds(0.1f);
             }
         }
         InputManager.Instance.inputAllowed = true;
@@ -70,6 +72,7 @@ public class FlameManager : MonoBehaviour
             flames[flame].GetComponent<Image>().enabled = true;
             yield return new WaitForSeconds(waitTimeBetweenInputs);
             flames[flame].GetComponent<Image>().enabled = false;
+            yield return new WaitForSeconds(0.1f);
         }
         else
         {
@@ -78,7 +81,9 @@ public class FlameManager : MonoBehaviour
             yield return new WaitForSeconds(waitTimeBetweenInputs);
             flames[flame - 5].GetComponent<Image>().enabled = false;
             flames[flame - 4].GetComponent<Image>().enabled = false;
+            yield return new WaitForSeconds(0.1f);
         }
-        InputManager.Instance.inputAllowed = true;
+
+        GameManager.Instance.CheckInput(flame);
     }
 }

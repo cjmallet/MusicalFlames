@@ -8,13 +8,14 @@ public class GameManager : MonoBehaviour
     private static GameManager _instance;
 
     [SerializeField]
-    private Queue<int> currentOrder = new Queue<int>();
+    private GameObject failedScreen;
 
-    [SerializeField]
+    private Queue<int> currentOrder = new Queue<int>();
+    private Queue<int> correctOrder = new Queue<int>();
     private int amountCompleted;
 
-    [SerializeField]
-    private Phases currentPhase= Phases.TwoNotes;
+    [HideInInspector]
+    public Phases currentPhase= Phases.Base;
 
     private void Awake()
     {
@@ -35,9 +36,8 @@ public class GameManager : MonoBehaviour
 
     private void CreateRandomOrder()
     {
-        int min = 0;
         int max = 0;
-        currentOrder.Clear();
+
         switch (currentPhase)
         {
             case Phases.Base:
@@ -50,10 +50,12 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-        for (int x = 0; x < amountCompleted + 1; x++)
+        int randomCandle = Random.Range(0, max);
+        correctOrder.Enqueue(randomCandle);
+
+        foreach (int flame in correctOrder)
         {
-            int randomCandle = Random.Range(min, max);
-            currentOrder.Enqueue(randomCandle);
+            currentOrder.Enqueue(flame);
         }
         StartRound();
     }
@@ -63,7 +65,60 @@ public class GameManager : MonoBehaviour
         FlameManager.Instance.StartCoroutine("DisplayQueue", currentOrder);
     }
 
-    private enum Phases
+    private void GameOver()
+    {
+        failedScreen.gameObject.SetActive(true);
+    }
+
+    private void Quit()
+    {
+        Application.Quit();
+    }
+
+    private void Succes()
+    {
+        amountCompleted++;
+
+        if (amountCompleted==5)
+        {
+            if (currentPhase == Phases.Base)
+            {
+                currentPhase = Phases.NoCandles;
+            }
+            else 
+            {
+                currentPhase = Phases.TwoNotes;
+            }
+        }
+
+        CreateRandomOrder();
+    }
+
+    public void CheckInput(int input)
+    {
+        int correctValue = currentOrder.Dequeue();
+        if (input != correctValue)
+        {
+            GameOver();
+            return;
+        }
+
+        if (currentOrder.Count==0)
+        {
+            Succes();
+            return;
+        }
+
+        InputManager.Instance.inputAllowed = true;
+    }
+
+    public void Retry()
+    {
+        failedScreen.gameObject.SetActive(false);
+        CreateRandomOrder();
+    }
+
+    public enum Phases
     {
         Base,
         NoCandles,

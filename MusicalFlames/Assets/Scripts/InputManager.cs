@@ -31,7 +31,6 @@ public class InputManager : MonoBehaviour
     {
         if (inputAllowed)
         {
-            
             FlameManager.Instance.StartCoroutine("DisplayInput", keyCode);
         }
     }
