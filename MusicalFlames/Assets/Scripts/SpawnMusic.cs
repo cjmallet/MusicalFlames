@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Spawns music notes when the corresponding candle is lit
+/// </summary>
 public class SpawnMusic : MonoBehaviour
 {
     [SerializeField]

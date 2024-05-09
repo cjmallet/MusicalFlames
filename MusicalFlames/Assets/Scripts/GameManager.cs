@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Handles the current game state and possible phases the game can be in.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get { return _instance; } }
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
     {
         int max = 0;
 
+        //If it's currently possible to activate multiple candles then increase the maximum range the numbers can reach
         switch (currentPhase)
         {
             case Phases.Base:

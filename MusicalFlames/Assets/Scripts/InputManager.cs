@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Catches the input from the UI and gives it to the FlameManager
+/// </summary>
 public class InputManager : MonoBehaviour
 {
     [HideInInspector]
