@@ -28,12 +28,6 @@ public class GameManager : MonoBehaviour
         CreateRandomOrder();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     private void CreateRandomOrder()
     {
         int max = 0;
@@ -51,6 +45,7 @@ public class GameManager : MonoBehaviour
         }
 
         int randomCandle = Random.Range(0, max);
+
         correctOrder.Enqueue(randomCandle);
 
         foreach (int flame in correctOrder)
@@ -79,15 +74,17 @@ public class GameManager : MonoBehaviour
     {
         amountCompleted++;
 
-        if (amountCompleted==5)
+        if (amountCompleted == 5)
         {
             currentOrder.Clear();
+            correctOrder.Clear();
+            amountCompleted = 0;
+
             if (currentPhase == Phases.Base)
             {
-                
                 currentPhase = Phases.NoCandles;
             }
-            else 
+            else
             {
                 currentPhase = Phases.TwoNotes;
             }
