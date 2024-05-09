@@ -37,42 +37,22 @@ public class FlameManager : MonoBehaviour
         {
             if (flame < 5)
             {
-                if (GameManager.Instance.currentPhase!=GameManager.Phases.NoCandles)
-                {
-                    flames[flame].GetComponent<Image>().enabled = true;
-                }
-                
-                flames[flame].GetComponent<AudioSource>().Play();
+                ActivateFlame(flame, false);
+
                 yield return new WaitForSeconds(waitTimeBetweenFlames);
 
-                if (GameManager.Instance.currentPhase != GameManager.Phases.NoCandles)
-                {
-                    flames[flame].GetComponent<Image>().enabled = false;
-                }
-
-                flames[flame].GetComponent<AudioSource>().Stop();
+                DeactivateFlame(flame, false);
                 yield return new WaitForSeconds(0.1f);
             }
             else
             {
-                if (GameManager.Instance.currentPhase != GameManager.Phases.NoCandles)
-                {
-                    flames[flame - 5].GetComponent<Image>().enabled = true;
-                    flames[flame - 4].GetComponent<Image>().enabled = true;
-                }
-                
-                flames[flame - 5].GetComponent<AudioSource>().Play();
-                flames[flame - 4].GetComponent<AudioSource>().Play();
+                ActivateFlame(flame - 4, false);
+                ActivateFlame(flame - 5, false);
+
                 yield return new WaitForSeconds(waitTimeBetweenFlames);
 
-                if (GameManager.Instance.currentPhase != GameManager.Phases.NoCandles)
-                {
-                    flames[flame - 5].GetComponent<Image>().enabled = false;
-                    flames[flame - 4].GetComponent<Image>().enabled = false;
-                }
-                
-                flames[flame - 5].GetComponent<AudioSource>().Stop();
-                flames[flame - 4].GetComponent<AudioSource>().Stop();
+                DeactivateFlame(flame - 4, false);
+                DeactivateFlame(flame - 5, false);
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -84,30 +64,45 @@ public class FlameManager : MonoBehaviour
         InputManager.Instance.inputAllowed = false;
         if (flame < 5)
         {
-            flames[flame].GetComponent<Image>().enabled = true;
-            flames[flame].GetComponent<AudioSource>().Play();
+            ActivateFlame(flame, true);
             yield return new WaitForSeconds(waitTimeBetweenInputs);
-            flames[flame].GetComponent<Image>().enabled = false;
-            flames[flame].GetComponent<AudioSource>().Stop();
+
+            DeactivateFlame(flame, true);
             yield return new WaitForSeconds(0.1f);
         }
         else
         {
-            flames[flame - 5].GetComponent<Image>().enabled = true;
-            flames[flame - 5].GetComponent<AudioSource>().Play();
-
-            flames[flame - 4].GetComponent<Image>().enabled = true;
-            flames[flame - 4].GetComponent<AudioSource>().Play();
+            ActivateFlame(flame - 4, true);
+            ActivateFlame(flame - 5, true);
             yield return new WaitForSeconds(waitTimeBetweenInputs);
 
-            flames[flame - 5].GetComponent<Image>().enabled = false;
-            flames[flame - 5].GetComponent<AudioSource>().Stop();
-
-            flames[flame - 4].GetComponent<Image>().enabled = false;
-            flames[flame - 4].GetComponent<AudioSource>().Stop();
+            DeactivateFlame(flame - 4, true);
+            DeactivateFlame(flame - 5, true);
             yield return new WaitForSeconds(0.1f);
         }
 
         GameManager.Instance.CheckInput(flame);
+    }
+
+    private void ActivateFlame(int flame, bool isPlayerInput)
+    {
+        if (GameManager.Instance.currentPhase != GameManager.Phases.NoCandles || isPlayerInput)
+        {
+            flames[flame].GetComponent<Image>().enabled = true;
+        }
+
+        flames[flame].GetComponent<AudioSource>().Play();
+        flames[flame].GetComponent<SpawnMusic>().SpawnMusicNote();
+    }
+
+    private void DeactivateFlame(int flame, bool isPlayerInput)
+    {
+        if (GameManager.Instance.currentPhase != GameManager.Phases.NoCandles || isPlayerInput)
+        {
+            flames[flame].GetComponent<Image>().enabled = false;
+        }
+
+        flames[flame].GetComponent<SpawnMusic>().DeleteMusicNote();
+        flames[flame].GetComponent<AudioSource>().Stop();
     }
 }

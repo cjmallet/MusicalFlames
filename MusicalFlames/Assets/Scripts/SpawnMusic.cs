@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class SpawnMusic : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private GameObject musicNote;
+
+    [SerializeField]
+    private Transform spawnPosition;
+
+    private GameObject spawnedMusicNote;
+
+    public void SpawnMusicNote()
     {
-        
+        spawnedMusicNote=GameObject.Instantiate(musicNote, spawnPosition,true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DeleteMusicNote()
     {
-        
+        Destroy(spawnedMusicNote);
     }
 }
