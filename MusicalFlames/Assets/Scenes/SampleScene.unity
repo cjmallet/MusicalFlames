@@ -797,7 +797,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8518ecc6a9fe2fa4b9c2b726c23a4364, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  waitTimeBetweenFlames: 3
+  amountCompleted: 0
+  currentPhase: 0
 --- !u!4 &725910500
 Transform:
   m_ObjectHideFlags: 0

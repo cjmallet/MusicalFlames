@@ -7,11 +7,14 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get { return _instance; } }
     private static GameManager _instance;
 
-    public float waitTimeBetweenFlames;
-
+    [SerializeField]
     private Queue<int> currentOrder = new Queue<int>();
+
+    [SerializeField]
     private int amountCompleted;
-    private Phases currentPhase;
+
+    [SerializeField]
+    private Phases currentPhase= Phases.TwoNotes;
 
     private void Awake()
     {
@@ -49,7 +52,7 @@ public class GameManager : MonoBehaviour
 
         for (int x = 0; x < amountCompleted + 1; x++)
         {
-            int randomCandle = Random.Range(0, 4);
+            int randomCandle = Random.Range(min, max);
             currentOrder.Enqueue(randomCandle);
         }
         StartRound();
@@ -61,7 +64,6 @@ public class GameManager : MonoBehaviour
         for (int x = 0; x < currentOrderCopy.Count; x++)
         {
             int flameToDisplay = currentOrderCopy.Dequeue();
-
             FlameManager.Instance.StartCoroutine("DisplayCandle", flameToDisplay);
         }
     }

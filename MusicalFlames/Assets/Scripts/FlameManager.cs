@@ -32,32 +32,21 @@ public class FlameManager : MonoBehaviour
         
     }
 
-    public IEnumerator DisplayCandle(int flameToDisplay)
+    public IEnumerator DisplayCandle(int flamesToDisplay)
     {
-        switch (flameToDisplay)
+        if (flamesToDisplay<5)
         {
-            case 0:
-            case 1:
-            case 2:
-            case 3:
-            case 4:
-                flames[flameToDisplay].GetComponent<Image>().enabled = true;
-                yield return new WaitForSeconds(waitTimeBetweenFlames);
-                flames[flameToDisplay].GetComponent<Image>().enabled = false;
-                break;
-
-            case 5:
-
-                break;
-            case 6:
-
-                break;
-            case 7:
-
-                break;
-            case 8:
-
-                break;
+            flames[flamesToDisplay].GetComponent<Image>().enabled = true;
+            yield return new WaitForSeconds(waitTimeBetweenFlames);
+            flames[flamesToDisplay].GetComponent<Image>().enabled = false;
+        }
+        else
+        {
+            flames[flamesToDisplay - 5].GetComponent<Image>().enabled = true;
+            flames[flamesToDisplay - 4].GetComponent<Image>().enabled = true;
+            yield return new WaitForSeconds(waitTimeBetweenFlames);
+            flames[flamesToDisplay - 5].GetComponent<Image>().enabled = false;
+            flames[flamesToDisplay - 4].GetComponent<Image>().enabled = false;
         }
     }
 }
