@@ -10,10 +10,16 @@ public class FlameManager : MonoBehaviour
 
     [SerializeField]
     private float waitTimeBetweenFlames;
+
+    [SerializeField]
+    private float waitTimeBetweenInputs;
+
     private List<Transform> flames = new List<Transform>();
 
     private void Awake()
     {
+        _instance = this;
+
         foreach (Transform child in transform)
         {
             flames.Add(child);
@@ -23,7 +29,7 @@ public class FlameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _instance = this;
+        
     }
 
     // Update is called once per frame
@@ -32,21 +38,47 @@ public class FlameManager : MonoBehaviour
         
     }
 
-    public IEnumerator DisplayCandle(int flamesToDisplay)
+    public IEnumerator DisplayQueue(Queue<int> flamesToDisplay)
     {
-        if (flamesToDisplay<5)
+        InputManager.Instance.inputAllowed = false;
+
+        foreach (int flame in flamesToDisplay)
         {
-            flames[flamesToDisplay].GetComponent<Image>().enabled = true;
-            yield return new WaitForSeconds(waitTimeBetweenFlames);
-            flames[flamesToDisplay].GetComponent<Image>().enabled = false;
+            if (flame < 5)
+            {
+                flames[flame].GetComponent<Image>().enabled = true;
+                yield return new WaitForSeconds(waitTimeBetweenFlames);
+                flames[flame].GetComponent<Image>().enabled = false;
+            }
+            else
+            {
+                flames[flame - 5].GetComponent<Image>().enabled = true;
+                flames[flame - 4].GetComponent<Image>().enabled = true;
+                yield return new WaitForSeconds(waitTimeBetweenFlames);
+                flames[flame - 5].GetComponent<Image>().enabled = false;
+                flames[flame - 4].GetComponent<Image>().enabled = false;
+            }
+        }
+        InputManager.Instance.inputAllowed = true;
+    }
+
+    public IEnumerator DisplayInput(int flame)
+    {
+        InputManager.Instance.inputAllowed = false;
+        if (flame < 5)
+        {
+            flames[flame].GetComponent<Image>().enabled = true;
+            yield return new WaitForSeconds(waitTimeBetweenInputs);
+            flames[flame].GetComponent<Image>().enabled = false;
         }
         else
         {
-            flames[flamesToDisplay - 5].GetComponent<Image>().enabled = true;
-            flames[flamesToDisplay - 4].GetComponent<Image>().enabled = true;
-            yield return new WaitForSeconds(waitTimeBetweenFlames);
-            flames[flamesToDisplay - 5].GetComponent<Image>().enabled = false;
-            flames[flamesToDisplay - 4].GetComponent<Image>().enabled = false;
+            flames[flame - 5].GetComponent<Image>().enabled = true;
+            flames[flame - 4].GetComponent<Image>().enabled = true;
+            yield return new WaitForSeconds(waitTimeBetweenInputs);
+            flames[flame - 5].GetComponent<Image>().enabled = false;
+            flames[flame - 4].GetComponent<Image>().enabled = false;
         }
+        InputManager.Instance.inputAllowed = true;
     }
 }

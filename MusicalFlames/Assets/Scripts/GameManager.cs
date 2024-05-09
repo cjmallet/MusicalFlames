@@ -60,12 +60,7 @@ public class GameManager : MonoBehaviour
 
     private void StartRound()
     {
-        Queue<int> currentOrderCopy = currentOrder;
-        for (int x = 0; x < currentOrderCopy.Count; x++)
-        {
-            int flameToDisplay = currentOrderCopy.Dequeue();
-            FlameManager.Instance.StartCoroutine("DisplayCandle", flameToDisplay);
-        }
+        FlameManager.Instance.StartCoroutine("DisplayQueue", currentOrder);
     }
 
     private enum Phases
