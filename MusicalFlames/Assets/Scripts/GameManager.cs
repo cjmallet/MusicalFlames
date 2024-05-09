@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     private int amountCompleted;
 
     [HideInInspector]
-    public Phases currentPhase= Phases.Base;
+    public Phases currentPhase= Phases.TwoNotes;
 
     private void Awake()
     {
@@ -81,8 +81,10 @@ public class GameManager : MonoBehaviour
 
         if (amountCompleted==5)
         {
+            currentOrder.Clear();
             if (currentPhase == Phases.Base)
             {
+                
                 currentPhase = Phases.NoCandles;
             }
             else 

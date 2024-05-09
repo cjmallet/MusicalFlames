@@ -47,17 +47,26 @@ public class FlameManager : MonoBehaviour
             if (flame < 5)
             {
                 flames[flame].GetComponent<Image>().enabled = true;
+                flames[flame].GetComponent<AudioSource>().Play();
                 yield return new WaitForSeconds(waitTimeBetweenFlames);
                 flames[flame].GetComponent<Image>().enabled = false;
+                flames[flame].GetComponent<AudioSource>().Stop();
                 yield return new WaitForSeconds(0.1f);
             }
             else
             {
                 flames[flame - 5].GetComponent<Image>().enabled = true;
+                flames[flame - 5].GetComponent<AudioSource>().Play();
+
                 flames[flame - 4].GetComponent<Image>().enabled = true;
+                flames[flame - 4].GetComponent<AudioSource>().Play();
                 yield return new WaitForSeconds(waitTimeBetweenFlames);
+
                 flames[flame - 5].GetComponent<Image>().enabled = false;
+                flames[flame - 5].GetComponent<AudioSource>().Stop();
+
                 flames[flame - 4].GetComponent<Image>().enabled = false;
+                flames[flame - 4].GetComponent<AudioSource>().Stop();
                 yield return new WaitForSeconds(0.1f);
             }
         }
@@ -70,17 +79,26 @@ public class FlameManager : MonoBehaviour
         if (flame < 5)
         {
             flames[flame].GetComponent<Image>().enabled = true;
+            flames[flame].GetComponent<AudioSource>().Play();
             yield return new WaitForSeconds(waitTimeBetweenInputs);
             flames[flame].GetComponent<Image>().enabled = false;
+            flames[flame].GetComponent<AudioSource>().Stop();
             yield return new WaitForSeconds(0.1f);
         }
         else
         {
             flames[flame - 5].GetComponent<Image>().enabled = true;
+            flames[flame - 5].GetComponent<AudioSource>().Play();
+
             flames[flame - 4].GetComponent<Image>().enabled = true;
+            flames[flame - 4].GetComponent<AudioSource>().Play();
             yield return new WaitForSeconds(waitTimeBetweenInputs);
+
             flames[flame - 5].GetComponent<Image>().enabled = false;
+            flames[flame - 5].GetComponent<AudioSource>().Stop();
+
             flames[flame - 4].GetComponent<Image>().enabled = false;
+            flames[flame - 4].GetComponent<AudioSource>().Stop();
             yield return new WaitForSeconds(0.1f);
         }
 
